@@ -12,6 +12,7 @@ const pasteIntoSketchFunction = require('./components/pasteIntoSketchFunction.js
 const editIntoSketchFunction = require('./components/editIntoSketchFunction.js');
 const renameIntoSketchFunction = require('./components/renameIntoSketchFunction.js');
 const waitForEnter = require('./components/waitForEnter.js');
+const searchAndClickTransform = require('./components/searchAndClickTransform.js');
 
 
 const { performRightClickOptionByTitle } = require('./components/performRightClickOptionByTitle.js');
@@ -67,10 +68,10 @@ const { performRightClickOptionByTitle } = require('./components/performRightCli
 
 
 
-        // RIGHT CLICK 
+        // RIGHT CLICK
         //ALL THE FOLLOWING CODE NEEDS TO GO TOGETHER
-        console.log('Waiting 10 seconds.');
-        console.log('SELECTING ITEM 5 ON THE LIST.');
+        console.log('clickButtonByIndex');
+        console.log('pasteIntoSketchFunction');
         await new Promise(resolve => setTimeout(resolve, 10000)); // Wait for 10 seconds
         const desiredIndex1 = 7; //IMPORTANT PART THAT MAKES THE CODE RUN!
         await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 10 seconds
@@ -86,6 +87,7 @@ const { performRightClickOptionByTitle } = require('./components/performRightCli
         await new Promise(resolve => setTimeout(resolve, 10000)); // Wait for 10 seconds
         console.log('Waited for 10 seconds.');
         console.log('BEFORE THE CODE RUNS.');
+        //NEED TO ADD THE EDIT FUNCTION HERE, LIKE pasteIntoSketchFunction OR copySketchFunction
         pasteIntoSketchFunction(editOptions1, newPage);
         await new Promise(resolve => setTimeout(resolve, 40000)); // Wait for 10 seconds
         console.log('Waited for 40 seconds.'); console.log('AFTER THE CODE RUNS.');
@@ -144,29 +146,60 @@ const { performRightClickOptionByTitle } = require('./components/performRightCli
 
         // /////////
         //EDIT
-        console.log('START clickButtonByIndex');
-        console.log('WE START THE 10TH PHASE');
+        //ALL THE FOLLOWING CODE NEEDS TO GO TOGETHER
+        console.log('Waiting 10 seconds.');
+        console.log('clickButtonByIndex');
+        console.log('editIntoSketchFunction');
         await new Promise(resolve => setTimeout(resolve, 10000)); // Wait for 5
         //ALL THE CODE TOGETHER
         const desiredIndex3 = 7; // Or any other desired index
         await clickButtonByIndex(newPage, desiredIndex3);
-        //Right click option
         //EDIT
-        console.log('END clickButtonByIndex');
-        console.log('WE START THE 10TH PHASE');
         await new Promise(resolve => setTimeout(resolve, 10000)); // Wait for 5
         // const selector3 = 'div[data-id="yyHiDTMWflCzpmJN"]'; // Replace with the appropriate selector //ORIGINAL
         const selector3 = 'div[data-id="AJC+8X/uU1MWWXEK"]'; // Replace with the appropriate selector
-
-        // const title3 = 'Third Sketch'; // Replace with the desired title
         const title3 = 'Second Sketch'; // Replace with the desired title
-
         const editOptions4 = await performRightClickOptionByTitle(newPage, selector3, title3);
         console.log(editOptions4);
         //NEED TO ADD THE EDIT FUNCTION HERE, LIKE pasteIntoSketchFunction OR copySketchFunction
         editIntoSketchFunction(editOptions4, newPage);
         await new Promise(resolve => setTimeout(resolve, 40000)); // Wait for 10 seconds
         console.log('Waited for 40 seconds.'); console.log('AFTER THE CODE RUNS.');
+
+
+
+
+
+
+
+        ////////////////////
+        console.log('WAITING FOR USER TO CLICK ENTER')
+        await waitForEnter();
+        console.log('USER CLICKED ENTER')
+        ////////////////////
+        await searchAndClickTransform(newPage);
+        console.log('After waiting for the transform function')
+
+
+        //COMMAND FOR SEARCHING TRANSFORM AND THEN CLICKING ON IT 
+        // await new Promise(resolve => setTimeout(resolve, 10000));
+        // console.log('//COMMAND FOR SEARCHING TRANSFORM AND THEN CLICKING ON IT, waiting 10 seconds');
+        // console.log('Waited for 10 seconds.');
+
+        // await newPage.click('button.command-search-trigger');
+        // await new Promise(resolve => setTimeout(resolve, 10000));
+        // console.log('Waited for 10 seconds.');
+
+        // await newPage.type('.os-search-box-input', 'transform');
+        // await new Promise(resolve => setTimeout(resolve, 3000));
+        // console.log('Typed "transform" into the search input field.');
+
+        // await newPage.keyboard.press('Enter');
+        // await newPage.mouse.move(290, 311);
+        // await newPage.mouse.down({ button: 'left' });
+        // console.log('Mouse clicked and held at X:724, Y:297');
+        // await new Promise(resolve => setTimeout(resolve, 3000));
+
 
 
 
@@ -199,31 +232,10 @@ const { performRightClickOptionByTitle } = require('./components/performRightCli
 
 
 
-        //COMMAND FOR SEARCHING TRANSFORM AND THEN CLICKING ON IT 
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        console.log('//COMMAND FOR SEARCHING TRANSFORM AND THEN CLICKING ON IT, waiting 10 seconds');
-        console.log('Waited for 10 seconds.');
+        ////////////////////
+        await waitForEnter();
+        ////////////////////
 
-        await newPage.click('button.command-search-trigger');
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        console.log('Waited for 10 seconds.');
-
-        await newPage.type('.os-search-box-input', 'transform');
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        console.log('Typed "transform" into the search input field.');
-
-        await newPage.keyboard.press('Enter');
-        await newPage.mouse.move(290, 311);
-        await newPage.mouse.down({ button: 'left' });
-        console.log('Mouse clicked and held at X:724, Y:297');
-        await new Promise(resolve => setTimeout(resolve, 3000));
-
-        const readline = require('readline');
-        const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-        console.log('Please press the Enter key to continue...');
-        const enterPromise = new Promise(resolve => rl.once('line', resolve));
-        await enterPromise;
-        console.log('User pressed Enter to continue.');
 
         await newPage.evaluate(() => {
             document.addEventListener('mousemove', (event) => {
